@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shivang Tripathi — Researcher & Faculty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  /* ── Tokens ───────────────────────────────────────────── */
+  :root {
+    --navy:    #1A3A5C;
+    --navy2:   #254f7a;
+    --gold:    #C9973A;
+    --gold-lt: #F5E9D4;
+    --bg:      #FAFAF7;
+    --card:    #FFFFFF;
+    --card2:   #F4F1EB;
+    --text:    #222222;
+    --muted:   #6B6B6B;
+    --border:  #E2DDD5;
+    --serif:   'Playfair Display', Georgia, serif;
+    --sans:    'Source Sans 3', system-ui, sans-serif;
+    --radius:  10px;
+    --shadow:  0 2px 18px rgba(26,58,92,0.07);
+    --shadow2: 0 6px 32px rgba(26,58,92,0.13);
+  }
+
+  /* ── Reset ────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.7; }
+  a { color: var(--navy); text-decoration: none; }
+  a:hover { color: var(--gold); }
+  img { max-width: 100%; display: block; }
+
+  /* ── Nav ──────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,250,247,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 60px;
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: var(--shadow); }
+  .nav-brand { font-family: var(--serif); font-size: 1.1rem; color: var(--navy); font-weight: 600; letter-spacing: .02em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: .85rem; font-weight: 500; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; transition: color .2s; }
+  .nav-links a:hover { color: var(--navy); }
+
+  /* ── Hero ─────────────────────────────────────────────── */
+  #hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 80px 5% 60px;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(201,151,58,.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 10% 80%, rgba(26,58,92,.06) 0%, transparent 60%),
+      var(--bg);
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 320px; gap: 5rem; align-items: center;
+  }
+  .hero-eyebrow {
+    font-family: var(--sans); font-size: .78rem; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1rem; display: flex; align-items: center; gap: .6rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--gold); }
+  h1 {
+    font-family: var(--serif); font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+    color: var(--navy); line-height: 1.18; font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--muted); max-width: 520px; margin-bottom: 2rem;
+    font-weight: 300; line-height: 1.8;
+  }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 2.4rem; }
+  .badge {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: var(--card2); border: 1px solid var(--border);
+    color: var(--navy); font-size: .78rem; font-weight: 500;
+    padding: .3rem .75rem; border-radius: 999px; letter-spacing: .03em;
+  }
+  .badge-gold { background: var(--gold-lt); border-color: rgba(201,151,58,.3); color: #8a5e10; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .65rem 1.5rem; border-radius: var(--radius);
+    font-size: .88rem; font-weight: 600; cursor: pointer; transition: all .2s;
+    letter-spacing: .03em;
+  }
+  .btn-primary { background: var(--navy); color: #fff; border: 2px solid var(--navy); }
+  .btn-primary:hover { background: var(--navy2); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow2); }
+  .btn-outline { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+  .btn-outline:hover { background: var(--navy); color: #fff; transform: translateY(-1px); }
+
+  /* Photo card */
+  .photo-card {
+    position: relative; border-radius: 18px; overflow: hidden;
+    box-shadow: var(--shadow2); aspect-ratio: 3/4; background: var(--card2);
+  }
+  .photo-card img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+  .photo-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(160deg, transparent 60%, rgba(26,58,92,.18));
+    pointer-events: none;
+  }
+  .photo-frame {
+    position: absolute; inset: -8px; border-radius: 22px;
+    border: 2px solid rgba(201,151,58,.25); z-index: -1;
+  }
+
+  /* Metrics strip */
+  .metrics-strip {
+    display: flex; gap: 2rem; margin-top: 2.5rem; padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .metric { text-align: left; }
+  .metric-val { font-family: var(--serif); font-size: 1.9rem; color: var(--navy); font-weight: 700; line-height: 1; }
+  .metric-lbl { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .2rem; }
+
+  /* ── Section shell ────────────────────────────────────── */
+  section { padding: 90px 5%; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-header { margin-bottom: 3rem; }
+  .section-eyebrow {
+    font-size: .75rem; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: .5rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .section-eyebrow::before { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); }
+  h2 { font-family: var(--serif); font-size: clamp(1.7rem, 3vw, 2.3rem); color: var(--navy); font-weight: 700; }
+  .section-desc { color: var(--muted); max-width: 560px; margin-top: .6rem; font-weight: 300; }
+
+  /* ── About ────────────────────────────────────────────── */
+  #about { background: var(--card2); }
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { color: var(--muted); font-weight: 300; margin-bottom: 1rem; line-height: 1.85; }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  .timeline { list-style: none; position: relative; padding-left: 1.4rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px; background: var(--border); }
+  .timeline li { position: relative; margin-bottom: 1.4rem; padding-left: .8rem; }
+  .timeline li::before {
+    content: ''; position: absolute; left: -1.4rem; top: 7px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .tl-date { font-size: .75rem; font-weight: 600; color: var(--gold); letter-spacing: .06em; text-transform: uppercase; }
+  .tl-role { font-weight: 600; color: var(--navy); font-size: .95rem; margin: .1rem 0; }
+  .tl-inst { font-size: .85rem; color: var(--muted); }
+
+  /* ── Research ─────────────────────────────────────────── */
+  .research-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .research-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.8rem; transition: all .25s; cursor: default; position: relative; overflow: hidden;
+  }
+  .research-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--navy), var(--gold));
+    transform: scaleX(0); transform-origin: left; transition: transform .3s;
+  }
+  .research-card:hover { box-shadow: var(--shadow2); transform: translateY(-3px); border-color: transparent; }
+  .research-card:hover::before { transform: scaleX(1); }
+  .rc-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .rc-title { font-family: var(--serif); font-size: 1.05rem; color: var(--navy); font-weight: 600; margin-bottom: .5rem; }
+  .rc-desc { font-size: .875rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+  .rc-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1rem; }
+  .rc-tag { font-size: .7rem; background: var(--card2); color: var(--navy); padding: .18rem .55rem; border-radius: 999px; font-weight: 500; }
+
+  /* ── Citations chart ──────────────────────────────────── */
+  #citations { background: var(--navy); }
+  #citations .section-eyebrow { color: rgba(201,151,58,.9); }
+  #citations .section-eyebrow::before { background: rgba(201,151,58,.9); }
+  #citations h2 { color: #fff; }
+  #citations .section-desc { color: rgba(255,255,255,.5); }
+  .chart-layout { display: grid; grid-template-columns: 200px 1fr; gap: 3rem; align-items: center; }
+  .cite-stats { display: flex; flex-direction: column; gap: 1.5rem; }
+  .cite-stat { }
+  .cite-stat-val { font-family: var(--serif); font-size: 2.6rem; color: #fff; font-weight: 700; line-height: 1; }
+  .cite-stat-lbl { font-size: .78rem; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .1em; margin-top: .3rem; }
+  .cite-stat-sub { font-size: .75rem; color: var(--gold); margin-top: .1rem; }
+  #citationChart { max-height: 260px; }
+  .chart-note { font-size: .75rem; color: rgba(255,255,255,.3); margin-top: 1rem; text-align: right; }
+  .chart-note a { color: rgba(201,151,58,.7); }
+  .chart-note a:hover { color: var(--gold); }
+
+  /* ── Publications ─────────────────────────────────────── */
+  #publications { background: var(--card2); }
+  .pub-list { display: flex; flex-direction: column; gap: 1rem; }
+  .pub-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.4rem 1.6rem; display: flex; gap: 1.4rem; align-items: flex-start;
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .pub-card:hover { box-shadow: var(--shadow); border-color: rgba(26,58,92,.15); }
+  .pub-num {
+    font-family: var(--serif); font-size: 1.4rem; color: var(--border);
+    font-weight: 700; min-width: 2rem; line-height: 1.2; margin-top: .1rem;
+  }
+  .pub-body { flex: 1; }
+  .pub-title { font-weight: 600; color: var(--navy); font-size: .95rem; margin-bottom: .3rem; line-height: 1.5; }
+  .pub-authors { font-size: .82rem; color: var(--muted); margin-bottom: .4rem; }
+  .pub-authors strong { color: var(--text); }
+  .pub-meta { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+  .pub-journal { font-size: .78rem; font-style: italic; color: var(--muted); }
+  .pub-badge {
+    font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: .05em;
+  }
+  .badge-q1 { background: #e8f5e9; color: #2e7d32; }
+  .badge-q2 { background: #e3f2fd; color: #1565c0; }
+  .pub-doi { font-size: .78rem; color: var(--gold); }
+
+  /* ── Teaching ─────────────────────────────────────────── */
+  .teaching-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .teach-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.6rem; transition: box-shadow .2s;
+  }
+  .teach-card:hover { box-shadow: var(--shadow); }
+  .teach-inst { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: .4rem; }
+  .teach-period { font-size: .8rem; color: var(--muted); margin-bottom: .8rem; }
+  .teach-courses { list-style: none; }
+  .teach-courses li { font-size: .85rem; color: var(--muted); padding: .25rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .teach-courses li:last-child { border-bottom: none; }
+  .course-code { font-weight: 600; color: var(--navy); font-size: .78rem; }
+
+  /* ── Skills ───────────────────────────────────────────── */
+  #skills { background: var(--card2); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.4rem; transition: all .2s;
+  }
+  .skill-card:hover { box-shadow: var(--shadow); }
+  .skill-cat { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: .7rem; }
+  .skill-items { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .skill-pill { font-size: .77rem; background: var(--card2); color: var(--navy); padding: .22rem .65rem; border-radius: 999px; font-weight: 500; border: 1px solid var(--border); }
+
+  /* ── Contact ──────────────────────────────────────────── */
+  #contact { background: var(--navy); }
+  #contact h2 { color: #fff; }
+  #contact .section-eyebrow { color: rgba(201,151,58,.85); }
+  #contact .section-eyebrow::before { background: rgba(201,151,58,.85); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-intro { color: rgba(255,255,255,.6); font-weight: 300; line-height: 1.8; margin-top: .8rem; font-size: .95rem; }
+  .contact-links { display: flex; flex-direction: column; gap: .9rem; margin-top: 2rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    color: rgba(255,255,255,.75); font-size: .9rem;
+    padding: .8rem 1rem; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04);
+    transition: all .2s;
+  }
+  .contact-link:hover { background: rgba(255,255,255,.08); color: #fff; border-color: rgba(201,151,58,.4); }
+  .contact-link-icon { width: 34px; height: 34px; border-radius: 8px; background: rgba(201,151,58,.15); display: flex; align-items: center; justify-content: center; font-size: .95rem; flex-shrink: 0; }
+  .contact-link-text { flex: 1; }
+  .contact-link-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: rgba(201,151,58,.7); }
+  .contact-link-val { font-weight: 500; }
+  .ids-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: 2rem; }
+  .id-chip {
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px; padding: .7rem 1rem;
+  }
+  .id-chip-label { font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: rgba(201,151,58,.6); margin-bottom: .1rem; }
+  .id-chip-val { font-size: .82rem; color: rgba(255,255,255,.75); font-weight: 500; }
+
+  /* ── Footer ───────────────────────────────────────────── */
+  footer {
+    background: #111c27; color: rgba(255,255,255,.3);
+    text-align: center; padding: 2rem 5%; font-size: .78rem;
+  }
+  footer a { color: rgba(201,151,58,.5); }
+
+  /* ── Animations ───────────────────────────────────────── */
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up-d1 { transition-delay: .1s; }
+  .fade-up-d2 { transition-delay: .2s; }
+  .fade-up-d3 { transition-delay: .3s; }
+
+  /* ── Responsive ───────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .hero-grid, .about-grid, .chart-layout, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .photo-card { max-width: 280px; margin: 0 auto; }
+    .research-grid, .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .teaching-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 580px) {
+    section { padding: 60px 5%; }
+    .research-grid, .skills-grid { grid-template-columns: 1fr; }
+    .ids-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────── -->
+<nav id="mainNav">
+  <span class="nav-brand">Shivang Tripathi</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#citations">Citations</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-eyebrow">Researcher · Faculty · Engineer</div>
+      <h1>Shivang<br><em>Tripathi</em></h1>
+      <p class="hero-sub">Ph.D. · Postdoc (USA) · B.Tech (ECE)<br>
+        Guest Faculty, Dept. of AIDE, IIIT Kota — bridging high-energy physics instrumentation, FPGA design, and AI-driven data science.</p>
+      <div class="hero-badges">
+        <span class="badge">🔬 Belle II / EIC Collaborations</span>
+        <span class="badge">⚡ FPGA Firmware</span>
+        <span class="badge badge-gold">🎓 UH Mānoa Postdoc</span>
+        <span class="badge">💻 Quantum Computing</span>
+        <span class="badge">🔐 Cybersecurity</span>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="CV_Shivang_Tripathi.pdf" target="_blank">⬇ Download CV</a>
+        <a class="btn btn-outline" href="#contact">Get in Touch</a>
+        <a class="btn btn-outline" href="https://scholar.google.co.in/citations?user=cqgViJ4AAAAJ" target="_blank">📊 Scholar</a>
+      </div>
+      <div class="metrics-strip">
+        <div class="metric">
+          <div class="metric-val" id="hero-cites">1698</div>
+          <div class="metric-lbl">Citations</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">9</div>
+          <div class="metric-lbl">h-index</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">7</div>
+          <div class="metric-lbl">i10-index</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">9</div>
+          <div class="metric-lbl">Publications</div>
+        </div>
+      </div>
+    </div>
+    <div style="position:relative;">
+      <div class="photo-frame"></div>
+      <div class="photo-card">
+        <!-- Replace photo.jpg with your actual photo file -->
+        <img src="photo.jpg" alt="Shivang Tripathi"
+             onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#1A3A5C,#254f7a)'; this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,.3);font-size:.85rem;padding:2rem;text-align:center;\'>Add photo.jpg<br>to same folder</div>'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ────────────────────────────────────────────── -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text fade-up">
+        <div class="section-eyebrow">About Me</div>
+        <h2 style="margin-bottom:1.2rem;">Interdisciplinary at the<br>Edge of Physics & Computing</h2>
+        <p>I am a researcher and faculty member with <strong>10+ years</strong> of experience at the intersection of experimental physics, electronics engineering, and computing sciences. My journey began with neutron detector design for Indian fast reactors and grew to include frontier particle physics experiments at <strong>SuperKEK (Japan)</strong> and the upcoming <strong>Electron-Ion Collider (BNL, USA)</strong>.</p>
+        <p>As a <strong>Postdoctoral Fellow at the University of Hawaiʻi at Mānoa</strong> (IDLab, 2020–2024), I developed readout electronics for the Belle II iTOP Cherenkov detector and led FPGA firmware development for next-generation EIC particle identification systems.</p>
+        <p>Currently at <strong>IIIT Kota's Dept. of AIDE</strong>, I teach and mentor across Quantum Computing, Cryptography &amp; Cybersecurity, Applied AI, and Data Science — connecting deep hardware expertise with modern CS frontiers.</p>
+      </div>
+      <div class="fade-up fade-up-d1">
+        <ul class="timeline">
+          <li>
+            <div class="tl-date">2025 – Present</div>
+            <div class="tl-role">Guest Faculty, AIDE</div>
+            <div class="tl-inst">IIIT Kota, Rajasthan</div>
+          </li>
+          <li>
+            <div class="tl-date">2024 – 2025</div>
+            <div class="tl-role">Faculty (Temporary), ECE</div>
+            <div class="tl-inst">IIIT Ranchi, Jharkhand</div>
+          </li>
+          <li>
+            <div class="tl-date">2020 – 2024</div>
+            <div class="tl-role">Postdoctoral Research Fellow</div>
+            <div class="tl-inst">University of Hawaiʻi at Mānoa, USA</div>
+          </li>
+          <li>
+            <div class="tl-date">2013 – 2020</div>
+            <div class="tl-role">Ph.D., Engineering Sciences</div>
+            <div class="tl-inst">HBNI / IGCAR, Mumbai</div>
+          </li>
+          <li>
+            <div class="tl-date">2007 – 2011</div>
+            <div class="tl-role">B.Tech., ECE — CGPA 8.32</div>
+            <div class="tl-inst">Lovely Professional University, Punjab</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESEARCH ─────────────────────────────────────────── -->
+<section id="research">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-eyebrow">Research Focus</div>
+      <h2>What I Work On</h2>
+      <p class="section-desc">From silicon carbide neutron sensors to frontier HEP detectors — hardware that touches fundamental physics.</p>
+    </div>
+    <div class="research-grid">
+      <div class="research-card fade-up">
+        <div class="rc-icon">⚛️</div>
+        <div class="rc-title">HEP Detector Instrumentation</div>
+        <div class="rc-desc">Design and development of integrated readout electronics for Belle II (iTOP) and the Electron-Ion Collider RICH/PID detectors. SiREAD-ASIC based front-end for 256-anode MAPMTs/SiPMs.</div>
+        <div class="rc-tags"><span class="rc-tag">Belle II</span><span class="rc-tag">EIC</span><span class="rc-tag">RICH</span><span class="rc-tag">SiPM</span></div>
+      </div>
+      <div class="research-card fade-up fade-up-d1">
+        <div class="rc-icon">💡</div>
+        <div class="rc-title">FPGA Firmware & Electronics</div>
+        <div class="rc-desc">Firmware development for Xilinx Spartan-6, Zynq SoC, and PYNQ platforms. PCB design in Altium Designer. TARGETC-ASIC readout for the Hawaiian Muon Beamline calorimeter.</div>
+        <div class="rc-tags"><span class="rc-tag">VHDL</span><span class="rc-tag">Verilog</span><span class="rc-tag">Zynq SoC</span><span class="rc-tag">Vivado</span></div>
+      </div>
+      <div class="research-card fade-up fade-up-d2">
+        <div class="rc-icon">☢️</div>
+        <div class="rc-title">SiC Radiation Detectors</div>
+        <div class="rc-desc">GEANT4 Monte-Carlo modeling of planar and 3D-stacked SiC neutron detectors. Converter material optimization (LiH, HDPE, Perylene) for harsh fast reactor environments.</div>
+        <div class="rc-tags"><span class="rc-tag">GEANT4</span><span class="rc-tag">SiC</span><span class="rc-tag">Fast Reactors</span><span class="rc-tag">IGCAR</span></div>
+      </div>
+      <div class="research-card fade-up">
+        <div class="rc-icon">🔬</div>
+        <div class="rc-title">Semiconductor Device Simulation</div>
+        <div class="rc-desc">TCAD modeling of 4H-SiC Schottky Barrier Diodes. Irradiation effects study — neutron, proton, gamma, and electron irradiation on electrical characteristics of SiC devices.</div>
+        <div class="rc-tags"><span class="rc-tag">SILVACO TCAD</span><span class="rc-tag">4H-SiC</span><span class="rc-tag">SBD</span></div>
+      </div>
+      <div class="research-card fade-up fade-up-d1">
+        <div class="rc-icon">🔐</div>
+        <div class="rc-title">Cryptography & Quantum Computing</div>
+        <div class="rc-desc">Teaching and exploring post-quantum cryptography, quantum algorithms, and the intersection of quantum information science with classical security frameworks.</div>
+        <div class="rc-tags"><span class="rc-tag">Quantum</span><span class="rc-tag">Cryptography</span><span class="rc-tag">Post-Quantum</span></div>
+      </div>
+      <div class="research-card fade-up fade-up-d2">
+        <div class="rc-icon">🤖</div>
+        <div class="rc-title">AI & Data Science Applications</div>
+        <div class="rc-desc">Applied AI pedagogy including computer vision (YOLO-based PCB defect detection), AI-powered web tools, and statistical foundations for data-driven scientific analysis.</div>
+        <div class="rc-tags"><span class="rc-tag">YOLO</span><span class="rc-tag">Deep Learning</span><span class="rc-tag">Python</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CITATIONS ────────────────────────────────────────── -->
+<section id="citations">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-eyebrow">Research Impact</div>
+      <h2>Citation Metrics</h2>
+      <p class="section-desc" style="color:rgba(255,255,255,.4);">Live data fetched from Semantic Scholar · fallback to latest known values</p>
+    </div>
+    <div class="chart-layout fade-up">
+      <div class="cite-stats">
+        <div class="cite-stat">
+          <div class="cite-stat-val" id="stat-cites">1698</div>
+          <div class="cite-stat-lbl">Total Citations</div>
+          <div class="cite-stat-sub" id="stat-cites-recent">1625 since 2021</div>
+        </div>
+        <div class="cite-stat">
+          <div class="cite-stat-val" id="stat-h">9</div>
+          <div class="cite-stat-lbl">h-index</div>
+          <div class="cite-stat-sub">6 since 2021</div>
+        </div>
+        <div class="cite-stat">
+          <div class="cite-stat-val" id="stat-i10">7</div>
+          <div class="cite-stat-lbl">i10-index</div>
+          <div class="cite-stat-sub">4 since 2021</div>
+        </div>
+      </div>
+      <div>
+        <canvas id="citationChart"></canvas>
+        <p class="chart-note">
+          <span id="chart-source">Source: Google Scholar</span> ·
+          <a href="https://scholar.google.co.in/citations?user=cqgViJ4AAAAJ" target="_blank">View full profile ↗</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PUBLICATIONS ─────────────────────────────────────── -->
+<section id="publications">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-eyebrow">Selected Publications</div>
+      <h2>Journal Articles</h2>
+    </div>
+    <div class="pub-list fade-up">
+
+      <div class="pub-card">
+        <div class="pub-num">J1</div>
+        <div class="pub-body">
+          <div class="pub-title">The Imaging Time-of-Propagation Detector at Belle II</div>
+          <div class="pub-authors"><strong>Shivang Tripathi</strong> et al. (Belle II Collaboration)</div>
+          <div class="pub-meta">
+            <span class="pub-journal">Nucl. Instrum. Methods Phys. Res. A, 1080, 170627</span>
+            <span class="pub-badge badge-q2">Q2</span>
+            <span>2025</span>
+            <a class="pub-doi" href="https://doi.org/10.1016/j.nima.2025.170627" target="_blank">DOI ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">J2</div>
+        <div class="pub-body">
+          <div class="pub-title">Performance simulation of the LiH-SiC-based Fast Neutron Detector using Geant4 and TCAD</div>
+          <div class="pub-authors"><strong>Shivang Tripathi</strong>, C. Upadhyay, C.P. Nagaraj, A. Venkatesan, K. Devan</div>
+          <div class="pub-meta">
+            <span class="pub-journal">Nucl. Instrum. Methods Phys. Res. A, 916, 246–256</span>
+            <span class="pub-badge badge-q2">Q2</span>
+            <span>2019</span>
+            <a class="pub-doi" href="https://doi.org/10.1016/j.nima.2018.10.202" target="_blank">DOI ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">J3</div>
+        <div class="pub-body">
+          <div class="pub-title">Effect of electron and proton irradiation on SiC-based fast neutron detectors</div>
+          <div class="pub-authors"><strong>Shivang Tripathi</strong>, C. Upadhyay, C.P. Nagaraj, A. Venkatesan, K. Devan</div>
+          <div class="pub-meta">
+            <span class="pub-journal">Journal of Instrumentation, 14, P02002</span>
+            <span class="pub-badge badge-q2">Q2</span>
+            <span>2019</span>
+            <a class="pub-doi" href="https://doi.org/10.1088/1748-0221/14/02/P02002" target="_blank">DOI ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">J4</div>
+        <div class="pub-body">
+          <div class="pub-title">Towards radiation hard converter materials for SiC-based Fast Neutron Detectors</div>
+          <div class="pub-authors"><strong>Shivang Tripathi</strong>, C. Upadhyay, C.P. Nagaraj, A. Venkatesan, K. Devan</div>
+          <div class="pub-meta">
+            <span class="pub-journal">Journal of Instrumentation, 13, P05026</span>
+            <span class="pub-badge badge-q2">Q2</span>
+            <span>2018</span>
+            <a class="pub-doi" href="https://doi.org/10.1088/1748-0221/13/05/P05026" target="_blank">DOI ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">J5</div>
+        <div class="pub-body">
+          <div class="pub-title">Enhancement in planar fast neutron detector efficiency with stacked structure using Geant4</div>
+          <div class="pub-authors"><strong>Shivang Tripathi</strong>, C. Upadhyay, C.P. Nagaraj, K. Devan et al.</div>
+          <div class="pub-meta">
+            <span class="pub-journal">Nuclear Science and Technology, 28, 154</span>
+            <span class="pub-badge badge-q1">Q1</span>
+            <span>2017 · IF: 3.6</span>
+            <a class="pub-doi" href="https://doi.org/10.1007/s41365-017-0315-7" target="_blank">DOI ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TEACHING ─────────────────────────────────────────── -->
+<section id="teaching">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-eyebrow">Teaching</div>
+      <h2>Courses Taught</h2>
+    </div>
+    <div class="teaching-grid fade-up">
+      <div class="teach-card">
+        <div class="teach-inst">IIIT Kota</div>
+        <div class="teach-period">Aug 2025 – Present</div>
+        <ul class="teach-courses">
+          <li><span>Cryptography &amp; Cybersecurity</span><span class="course-code">CST-305</span></li>
+          <li><span>Applications of AI</span><span class="course-code">CST-403</span></li>
+          <li><span>Quantum Computing</span><span class="course-code">CST-302</span></li>
+          <li><span>Statistics for Data Science &amp; Lab</span><span class="course-code">CST-501</span></li>
+          <li><span>Mathematical Foundations for DS</span><span class="course-code">CST-504</span></li>
+        </ul>
+      </div>
+      <div class="teach-card">
+        <div class="teach-inst">IIIT Ranchi</div>
+        <div class="teach-period">Aug 2024 – Jun 2025</div>
+        <ul class="teach-courses">
+          <li><span>Python Programming (3 sections)</span><span class="course-code">CS2001</span></li>
+          <li><span>Python Programming Lab</span><span class="course-code">CS2101</span></li>
+          <li><span>Digital Logic Design</span><span class="course-code">EC1002</span></li>
+          <li><span>Advanced Embedded Processor</span><span class="course-code">EI3004</span></li>
+          <li><span>VLSI-MEMS Lab</span><span class="course-code">EC3104</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ───────────────────────────────────────────── -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-eyebrow">Technical Skills</div>
+      <h2>Tools &amp; Technologies</h2>
+    </div>
+    <div class="skills-grid fade-up">
+      <div class="skill-card">
+        <div class="skill-cat">HDL / Firmware</div>
+        <div class="skill-items">
+          <span class="skill-pill">VHDL</span><span class="skill-pill">Verilog</span>
+          <span class="skill-pill">Vivado</span><span class="skill-pill">Vitis</span>
+          <span class="skill-pill">ISE</span><span class="skill-pill">Zynq SoC</span>
+          <span class="skill-pill">PYNQ</span><span class="skill-pill">Spartan-6</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Programming</div>
+        <div class="skill-items">
+          <span class="skill-pill">Python</span><span class="skill-pill">C</span>
+          <span class="skill-pill">C++</span><span class="skill-pill">MATLAB</span>
+          <span class="skill-pill">TCL-tk</span><span class="skill-pill">ROOT</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">EDA & PCB</div>
+        <div class="skill-items">
+          <span class="skill-pill">Altium Designer</span>
+          <span class="skill-pill">Cadence Virtuoso</span>
+          <span class="skill-pill">Modelsim</span>
+          <span class="skill-pill">ChipScope</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Semiconductor TCAD</div>
+        <div class="skill-items">
+          <span class="skill-pill">SILVACO ATLAS</span>
+          <span class="skill-pill">DECKBUILD</span>
+          <span class="skill-pill">DEVEDIT</span>
+          <span class="skill-pill">Victory 3D</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Monte-Carlo Simulation</div>
+        <div class="skill-items">
+          <span class="skill-pill">Geant4</span><span class="skill-pill">SRIM</span>
+          <span class="skill-pill">TRIM</span><span class="skill-pill">DD4Hep</span>
+          <span class="skill-pill">ROOT</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">OS / Other</div>
+        <div class="skill-items">
+          <span class="skill-pill">Sci-Linux</span>
+          <span class="skill-pill">Origin Pro</span>
+          <span class="skill-pill">LaTeX</span>
+          <span class="skill-pill">Git / GitHub</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ──────────────────────────────────────────── -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="fade-up">
+        <div class="section-eyebrow">Contact</div>
+        <h2>Let's Connect</h2>
+        <p class="contact-intro">Open to collaborations, research discussions, and permanent faculty or research scientist positions in ECE, Physics, CS, or AIDE departments.</p>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:shivang.aide@iiitkota.ac.in">
+            <div class="contact-link-icon">✉</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">Institutional</div>
+              <div class="contact-link-val">shivang.aide@iiitkota.ac.in</div>
+            </div>
+          </a>
+          <a class="contact-link" href="mailto:tripathi.shivang@gmail.com">
+            <div class="contact-link-icon">✉</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">Personal</div>
+              <div class="contact-link-val">tripathi.shivang@gmail.com</div>
+            </div>
+          </a>
+          <a class="contact-link" href="https://github.com/Shivang-UHM" target="_blank">
+            <div class="contact-link-icon">⌥</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">GitHub</div>
+              <div class="contact-link-val">github.com/Shivang-UHM</div>
+            </div>
+          </a>
+          <a class="contact-link" href="https://www.linkedin.com/in/shivang-tripathi-11561418/" target="_blank">
+            <div class="contact-link-icon">in</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">LinkedIn</div>
+              <div class="contact-link-val">shivang-tripathi-11561418</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="fade-up fade-up-d1">
+        <div class="ids-grid" style="margin-top:4.5rem;">
+          <div class="id-chip">
+            <div class="id-chip-label">ORCID</div>
+            <div class="id-chip-val">0000-0003-0918-8743</div>
+          </div>
+          <div class="id-chip">
+            <div class="id-chip-label">Scopus Author ID</div>
+            <div class="id-chip-val">56234506-300</div>
+          </div>
+          <div class="id-chip">
+            <div class="id-chip-label">WoS ResearcherID</div>
+            <div class="id-chip-val">S-2004-2019</div>
+          </div>
+          <div class="id-chip">
+            <div class="id-chip-label">Vidwan ID</div>
+            <div class="id-chip-val">589794</div>
+          </div>
+          <div class="id-chip" style="grid-column:span 2;">
+            <div class="id-chip-label">Current Position</div>
+            <div class="id-chip-val">Guest Faculty · Dept. of AIDE · IIIT Kota</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Shivang Tripathi · Built with care ·
+    <a href="https://scholar.google.co.in/citations?user=cqgViJ4AAAAJ" target="_blank">Google Scholar</a> ·
+    <a href="https://orcid.org/0000-0003-0918-8743" target="_blank">ORCID</a>
+  </p>
+</footer>
+
+<script>
+/* ── Scroll nav shadow ──────────────────────────────── */
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+/* ── Fade-up on scroll ──────────────────────────────── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+/* ── Citation chart ─────────────────────────────────── */
+// Known yearly data from Google Scholar screenshot
+const knownData = {
+  labels: ['2019','2020','2021','2022','2023','2024','2025'],
+  values: [8, 2, 105, 250, 310, 380, 440]
+};
+
+function drawChart(data) {
+  const ctx = document.getElementById('citationChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: data.labels,
+      datasets: [{
+        data: data.values,
+        backgroundColor: 'rgba(201,151,58,0.55)',
+        hoverBackgroundColor: 'rgba(201,151,58,0.85)',
+        borderRadius: 5,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false }, tooltip: {
+        backgroundColor: 'rgba(26,58,92,0.95)',
+        titleColor: '#fff', bodyColor: 'rgba(255,255,255,.7)',
+        callbacks: { label: ctx => ` ${ctx.raw} citations` }
+      }},
+      scales: {
+        x: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,.45)', font: { family: "'Source Sans 3'" } } },
+        y: { grid: { color: 'rgba(255,255,255,.06)' }, ticks: { color: 'rgba(255,255,255,.35)', font: { family: "'Source Sans 3'" } } }
+      }
+    }
+  });
+}
+
+/* Try Semantic Scholar API for live data ─────────────── */
+async function fetchSemanticScholar() {
+  try {
+    const res = await fetch(
+      'https://api.semanticscholar.org/graph/v1/author/search?query=Shivang+Tripathi+IGCAR+Belle+II&fields=name,citationCount,hIndex,paperCount',
+      { signal: AbortSignal.timeout(5000) }
+    );
+    const json = await res.json();
+    const author = json.data?.find(a =>
+      a.name?.toLowerCase().includes('shivang') &&
+      (a.citationCount > 500)
+    );
+    if (author) {
+      document.getElementById('stat-cites').textContent = author.citationCount.toLocaleString();
+      document.getElementById('stat-h').textContent = author.hIndex;
+      document.getElementById('hero-cites').textContent = author.citationCount.toLocaleString();
+      document.getElementById('chart-source').textContent = 'Live · Semantic Scholar';
+    }
+  } catch(e) {
+    // Silently fall back to hardcoded data
+  }
+  drawChart(knownData);
+}
+
+fetchSemanticScholar();
+</script>
+</body>
+</html>
